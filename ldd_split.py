@@ -84,32 +84,72 @@ def split_place_constraint(ldd, cons):
 
     if side == RIGHT:
         print_debug("caso RIGHT")
-        new_ldd_pos = ldd_node(cons)
-        new_ldd_neg = ldd_node(ldd.cons)
-        new_ldd_neg_then = ldd_node(cons)
-        set_children(new_ldd_neg_then, false_node(), copy_ldd(then_child(ldd)))
-        return (set_children(new_ldd_pos, then_child(ldd), false_node()), 
-                set_children(new_ldd_neg, new_ldd_neg_then, else_child(ldd)))
+
+        if is_false(then_child(ldd)):
+            new_ldd_pos = false_node()
+        else:
+            new_ldd_pos = ldd_node(cons, then_child(ldd), false_node())
+
+        if is_false(then_child(ldd)):
+            new_ldd_neg_then = false_node()
+        else:
+            new_ldd_neg_then = ldd_node(cons)
+            set_children(new_ldd_neg_then, false_node(), copy_ldd(then_child(ldd)))
+
+        if is_false(else_child(ldd)) and is_false(new_ldd_neg_then):
+            new_ldd_neg = false_node()
+        else:
+            new_ldd_neg = ldd_node(ldd.cons, new_ldd_neg_then, else_child(ldd))
+
+        if is_false(new_ldd_pos) and is_false(new_ldd_neg):
+            return false_node()
+        else:
+            return (new_ldd_pos, new_ldd_neg)
+        
     elif side == IF_RIGHT:
         print_debug("caso IF_RIGHT")
-        # new_ldd_pos = ldd_node(cons)
-        # new_ldd_neg = ldd_node(cons)
-        # return (set_children(new_ldd_pos, then_child(ldd), false_node()), 
-        #         set_children(new_ldd_neg, false_node(), else_child(ldd)))
+
     elif side == IF_LEFT:
         print_debug("caso IF_LEFT")
-        new_ldd_pos = ldd_node(ldd.cons)
-        new_ldd_neg = ldd_node(ldd.cons)
-        return (set_children(new_ldd_pos, then_child(ldd), false_node()), 
-                set_children(new_ldd_neg, false_node(), else_child(ldd)))
+
+        if is_false(then_child(ldd)):
+            new_ldd_pos = false_node()
+        else:
+            new_ldd_pos = ldd_node(ldd.cons, then_child(ldd), false_node())
+
+        if is_false(else_child(ldd)):
+            new_ldd_neg = false_node()
+        else:
+            new_ldd_neg = ldd_node(ldd.cons, false_node(), else_child(ldd))
+
+        if is_false(new_ldd_pos) and is_false(new_ldd_neg):
+            return false_node()
+        else:
+            return (new_ldd_pos, new_ldd_neg)
+        
     elif side == LEFT:
         print_debug("caso LEFT")
-        new_ldd_pos = ldd_node(ldd.cons)
-        new_ldd_neg = ldd_node(cons)
-        new_ldd_pos_else = ldd_node(cons)
-        set_children(new_ldd_pos_else, copy_ldd(else_child(ldd)), false_node())
-        return (set_children(new_ldd_pos, then_child(ldd), new_ldd_pos_else), 
-                set_children(new_ldd_neg, false_node(), else_child(ldd)))
+
+        if is_false(else_child(ldd)):
+            new_ldd_pos_else = false_node()
+        else:
+            new_ldd_pos_else = ldd_node(cons, copy_ldd(else_child(ldd)), false_node())
+
+        if is_false(then_child(ldd)) and is_false(new_ldd_pos_else):
+            new_ldd_pos = false_node()
+        else:
+            new_ldd_pos = ldd_node(ldd.cons, then_child(ldd), new_ldd_pos_else)
+
+        if is_false(else_child(ldd)):
+            new_ldd_neg = false_node()
+        else:
+            new_ldd_neg = ldd_node(cons, false_node(), else_child(ldd))
+
+        if is_false(new_ldd_pos) and is_false(new_ldd_neg):
+            return false_node()
+        else:
+            return (new_ldd_pos, new_ldd_neg)
+        
     elif side == ONLY_THEN_RIGHT:
         print_debug("caso ONLY_THEN_RIGHT")
         new_ldd_pos, new_ldd_neg_then = split_place_constraint(then_child(ldd), cons)

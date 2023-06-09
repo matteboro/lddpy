@@ -169,3 +169,10 @@ def dont_share_ldd_nodes(ldd1, ldd2):
         if idx in ldd2_idxs:
             return False
     return True
+
+def dont_have_false_children(ldd):
+    if is_constant(ldd):
+        return True
+    if is_false(else_child(ldd)) and is_false(then_child(ldd)):
+        return False
+    return dont_have_false_children(else_child(ldd)) and dont_have_false_children(then_child(ldd))

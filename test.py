@@ -10,13 +10,18 @@ def ASSERT_TYPES(objs, types, func_name):
             exit(1)
 
 def SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, case):
-    print(f"   SPLIT GRID ERROR at coordinates ({x}, {y}), values: [ before: {before_val}, pos:{pos_val}, neg:{neg_val} ] in case: {case}")
+    print(f"SPLIT GRID ERROR at coordinates ({x}, {y}), values: [ before: {before_val}, pos:{pos_val}, neg:{neg_val} ] in case: {case}")
     return False
 
 def SPLIT_SHARE_NODES_ERROR(pos_ldd, neg_ldd):
-    print(f"   SPLIT SHARE NODES ERROR")
+    print(f"SPLIT SHARE NODES ERROR")
     dump_ldd_dot(pos_ldd)
     dump_ldd_dot(neg_ldd)
+    return False
+
+def HAVE_FALSE_CHILDREN_ERROR(ldd, side, test_number):
+    print(f"HAVE FALSE CHILDREN ERROR on {side} result")
+    save_rendered_dot_ldd(ldd, name=f"_{side}_{test_number}")
     return False
 
 def check_split_grid(from_x, to_x, from_y, to_y, before, pos, neg, cons):
@@ -65,7 +70,7 @@ def check_split_grid(from_x, to_x, from_y, to_y, before, pos, neg, cons):
                         return SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, f"y < cons.cst")
     return True
 
-def check_split(x_range, y_range, ldd, cons):
+def check_split(x_range, y_range, ldd, cons, test_number):
     from_x, to_x = x_range
     from_y, to_y = y_range
     before = satisfies_2d_grid(ldd, from_x, to_x, from_y, to_y)
@@ -77,14 +82,19 @@ def check_split(x_range, y_range, ldd, cons):
         return False
     if not dont_share_ldd_nodes(pos_ldd, neg_ldd):
         return SPLIT_SHARE_NODES_ERROR(pos_ldd, neg_ldd)
+    if not dont_have_false_children(pos_ldd):
+        return HAVE_FALSE_CHILDREN_ERROR(ldd, "positive", test_number)
+    if not dont_have_false_children(neg_ldd):
+        return HAVE_FALSE_CHILDREN_ERROR(ldd, "negative", test_number)
     return True
 
 def test(x_range, y_range, ldd, cons):
     global TEST_NUMBER
-    if not check_split(x_range, y_range, ldd, cons):
+    if not check_split(x_range, y_range, ldd, cons, TEST_NUMBER):
         print(f"test number {TEST_NUMBER} failed on constraint: {string_constraint(cons)}") 
     else:
         print(f"test number {TEST_NUMBER} passed")
+    print()
 
 def show_split_2d(x_range, y_range, ldd, cons):
     show_ldd_2d(ldd, x_range, y_range, f"ldd before constraint {string_constraint(cons)}")
@@ -519,6 +529,10 @@ test0()
 test1()
 test2()
 test3()
+
+import matplotlib as plt
+import numpy as np
+
 
 """
 show_ldd_2d(two_var_depth_2_then_child_ldd(), x_range, y_range)
