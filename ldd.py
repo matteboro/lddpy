@@ -76,7 +76,7 @@ def is_constant(obj):
     elif isinstance(obj, constraint):
         return obj.var == CONS_VAR
     else:
-        print("ERROR in is_constant(obj): object passed is not an ldd_node or a constraint")
+        print(f"ERROR in is_constant(obj): object passed is not an ldd_node or a constraint but of type {obj.__class__.__name__}")
         exit(1)
 
 # these functions respectively create and check whether a node

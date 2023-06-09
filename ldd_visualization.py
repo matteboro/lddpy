@@ -2,6 +2,8 @@ from ldd import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors
+import graphviz
+import os
 
 # Color for False and True
 my_cmap = matplotlib.colors.ListedColormap(['indianred', 'lightblue'])
@@ -33,6 +35,13 @@ def dump_ldd_dot(node, do_print=True):
     if do_print:
         print('\n'.join(string))
     return '\n'.join(string)
+
+def save_rendered_dot_ldd(ldd, format="pdf", name=""):
+    dot_string = dump_ldd_dot(ldd, do_print=False)
+    dot = graphviz.Source(dot_string)
+    dot.render(f'dot_output/ldd{name}.gv', format=format).replace('\\', '/')
+    if os.path.exists(f'dot_output/ldd{name}.gv'):
+        os.remove(f'dot_output/ldd{name}.gv')
 
 def dump_ldd(node):
     if (is_constant(node)):

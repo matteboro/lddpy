@@ -1,6 +1,5 @@
 from ldd_split import *
 from ldd_visualization import *
-import graphviz
 
 def ASSERT_TYPES(objs, types, func_name):
     for i, (obj, _type) in enumerate(zip(objs, types)):
@@ -81,6 +80,7 @@ def check_split(x_range, y_range, ldd, cons):
     return True
 
 def test(x_range, y_range, ldd, cons):
+    global TEST_NUMBER
     if not check_split(x_range, y_range, ldd, cons):
         print(f"test number {TEST_NUMBER} failed on constraint: {string_constraint(cons)}") 
     else:
@@ -111,110 +111,422 @@ def two_var_depth_1_ldd():
                     false_node(),
                     true_node()))
 
-def save_dot_ldd(ldd, format="pdf", name=""):
-    dot_string = dump_ldd_dot(ldd, do_print=False)
-    dot = graphviz.Source(dot_string)
-    dot.render(f'dot_output/ldd{name}.gv', format=format).replace('\\', '/')
+def two_var_depth_2_then_child_ldd():
+        return ldd_node(constraint(f"v0 >= 6"), 
+                    ldd_node(constraint(f"v0 >= 9"),
+                            ldd_node(constraint(f"v1 >= 9"),
+                                    true_node(),
+                                    false_node()),
+                            ldd_node(constraint(f"v1 >= 6"),
+                                    ldd_node(constraint(f"v1 >= 9"),
+                                            false_node(),
+                                            true_node()),
+                                    false_node())), 
+                    ldd_node(constraint(f"v1 >= 6"),
+                        false_node(),
+                        true_node()))
+
+def two_var_depth_2_else_child_ldd():
+    return ldd_node(constraint(f"v0 >= 6"), 
+                    ldd_node(constraint(f"v1 >= 6"),
+                            false_node(),
+                            true_node()), 
+                    ldd_node(constraint(f"v0 >= 3"),
+                            ldd_node(constraint(f"v1 >= 6"),
+                                    ldd_node(constraint(f"v1 >= 9"),
+                                            false_node(),
+                                            true_node()),
+                                    false_node()),
+                            ldd_node(constraint(f"v1 >= 9"),
+                                    true_node(),
+                                    false_node())))
 
 X = 0
 Y = 1
+
+TEST_NUMBER = 0
 
 x_range = (0, 12)
 y_range = (0, 12)
 
 # test cases where the variable of the constraint is not present in the ldd
+# TEST_NUMBER [0..3]
+def test0():
+    global TEST_NUMBER
 
-TEST_NUMBER = 0
+    TEST_NUMBER = 0
 
-ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
-cons = constraint(f"v1 <= 6")
-test(x_range, y_range, ldd_only_x_depth_2, cons)
+    ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
+    cons = constraint(f"v1 <= 6")
+    test(x_range, y_range, ldd_only_x_depth_2, cons)
 
-TEST_NUMBER = 1
+    TEST_NUMBER = 1
 
-ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
-cons = constraint(f"v1 >= 6")
-test(x_range, y_range, ldd_only_x_depth_2, cons)
+    ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
+    cons = constraint(f"v1 >= 6")
+    test(x_range, y_range, ldd_only_x_depth_2, cons)
 
-TEST_NUMBER = 2
+    TEST_NUMBER = 2
 
-ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
-cons = constraint(f"v0 >= 6")
-test(x_range, y_range, ldd_only_y_depth_2, cons)
+    ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
+    cons = constraint(f"v0 >= 6")
+    test(x_range, y_range, ldd_only_y_depth_2, cons)
 
-TEST_NUMBER = 3
+    TEST_NUMBER = 3
 
-ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
-cons = constraint(f"v0 <= 6")
-test(x_range, y_range, ldd_only_y_depth_2, cons)
+    ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
+    cons = constraint(f"v0 <= 6")
+    test(x_range, y_range, ldd_only_y_depth_2, cons)
 
 # test cases where the variable of the constraint is only on the root node
+# TEST_NUMBER [4..23]
+def test1():
+    global TEST_NUMBER
 
-# constraint in std form
+    # constraint in std form and on X
+    TEST_NUMBER = 4
 
-TEST_NUMBER = 4
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 10")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 10")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    TEST_NUMBER = 5
 
-TEST_NUMBER = 5
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 7")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 7")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    TEST_NUMBER = 6
 
-TEST_NUMBER = 6
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 6")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 6")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    TEST_NUMBER = 7
 
-TEST_NUMBER = 7
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 5")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 5")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    TEST_NUMBER = 8
 
-TEST_NUMBER = 8
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 2")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 2")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    # constraint not in std form and on X
+    TEST_NUMBER = 9
 
-# constraint not in std form
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 <= 10")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-TEST_NUMBER = 9
+    TEST_NUMBER = 10
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 <= 10")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 <= 6")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-TEST_NUMBER = 10
+    TEST_NUMBER = 11
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 <= 6")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 <= 5")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-TEST_NUMBER = 11
+    TEST_NUMBER = 12
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 <= 5")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 <= 4")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-TEST_NUMBER = 12
+    TEST_NUMBER = 13
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 4")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v0 >= 2")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
 
-TEST_NUMBER = 13
+    # constraint in std form and on Y
+    TEST_NUMBER = 14
 
-ldd_2_var_depth_1 = two_var_depth_1_ldd()
-cons = constraint(f"v0 >= 2")
-test(x_range, y_range, ldd_2_var_depth_1, cons)
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 10")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 15
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 7")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 16
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 6")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 17
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 5")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 18
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 2")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    # constraint not in std form and on Y
+    TEST_NUMBER = 19
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 <= 10")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 20
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 <= 6")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 21
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 <= 5")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 22
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 <= 4")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+    TEST_NUMBER = 23
+
+    ldd_2_var_depth_1 = two_var_depth_1_ldd()
+    cons = constraint(f"v1 >= 2")
+    test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+# test cases where the variable of the constraint is only on the then child
+# these cases cover only the X variable
+# TEST_NUMBER [24..39]
+def test2():
+    global TEST_NUMBER
+
+    # constraint in std form and on X
+    TEST_NUMBER = 24
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 11")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 25
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 10")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 26
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 9")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 27
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 8")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 28
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 29
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 6")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 30
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 31
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 >= 2")
+    test(x_range, y_range, ldd, cons)
+
+    # constraint not in std form and on X
+    TEST_NUMBER = 32
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 10")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 33
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 9")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 34
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 8")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 35
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 36
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 6")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 37
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 38
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 4")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 39
+
+    ldd = two_var_depth_2_then_child_ldd()
+    cons = constraint(f"v0 <= 2")
+    test(x_range, y_range, ldd, cons)
+
+# test cases where the variable of the constraint is only on the then child
+# these cases cover only the X variable
+# TEST_NUMBER [40..55]
+def test3():
+    global TEST_NUMBER
+
+    # constraint in std form and on X
+    TEST_NUMBER = 40
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 11")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 41
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 42
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 6")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 43
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 44
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 4")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 45
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 3")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 46
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 2")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 47
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 >= 1")
+    test(x_range, y_range, ldd, cons)
+
+    # constraint not in std form and on X
+    TEST_NUMBER = 48
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 10")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 49
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 50
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 6")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 51
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 52
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 4")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 53
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 3")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 54
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 3")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 55
+
+    ldd = two_var_depth_2_else_child_ldd()
+    cons = constraint(f"v0 <= 1")
+    test(x_range, y_range, ldd, cons)
+
+test0()
+test1()
+test2()
+test3()
 
 """
+show_ldd_2d(two_var_depth_2_then_child_ldd(), x_range, y_range)
+save_rendered_dot_ldd(two_var_depth_2_then_child_ldd())
+
+show_ldd_2d(two_var_depth_2_else_child_ldd(), x_range, y_range)
+save_rendered_dot_ldd(two_var_depth_2_else_child_ldd())
+
 print("cons: " + string_constraint(cons) + 
       "\ncons_else: " + string_constraint(else_child(ldd_2_var_depth_1).cons) + 
       "\ncons_if: " + string_constraint(ldd_2_var_depth_1.cons) + 
