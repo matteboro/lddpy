@@ -151,6 +151,20 @@ def two_var_depth_2_else_child_ldd():
                                     true_node(),
                                     false_node())))
 
+def one_var_depth_2_then_child_ldd():
+    return ldd_node(constraint("v0 >= 4"), 
+                    ldd_node(constraint("v0 >= 8"), 
+                             false_node(), 
+                             true_node()),
+                    false_node())
+
+def one_var_depth_2_else_child_ldd():
+    return ldd_node(constraint("v0 >= 8"), 
+                    false_node(),
+                    ldd_node(constraint("v0 >= 4"), 
+                             true_node(), 
+                             false_node()))
+
 X = 0
 Y = 1
 
@@ -525,10 +539,117 @@ def test3():
     cons = constraint(f"v0 <= 1")
     test(x_range, y_range, ldd, cons)
 
+
+# test cases where we only have one var but on more level
+# these should test better for the cases where is possible to create nodes with both false children
+# TEST_NUMBER [56..71]
+def test4():
+    global TEST_NUMBER
+
+    # cases with only child
+    TEST_NUMBER = 56
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 10")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 57
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 9")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 58
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 8")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 59
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 60
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 61
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 4")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 62
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 3")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 63
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 2")
+    test(x_range, y_range, ldd, cons)
+
+    # cases with ony else child
+    TEST_NUMBER = 64
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 10")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 65
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 9")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 66
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 8")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 67
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 7")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 68
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 5")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 69
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 4")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 70
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 3")
+    test(x_range, y_range, ldd, cons)
+
+    TEST_NUMBER = 71
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 2")
+    test(x_range, y_range, ldd, cons)
+
 test0()
 test1()
 test2()
 test3()
+test4()
+
 
 import matplotlib as plt
 import numpy as np
@@ -540,6 +661,12 @@ save_rendered_dot_ldd(two_var_depth_2_then_child_ldd())
 
 show_ldd_2d(two_var_depth_2_else_child_ldd(), x_range, y_range)
 save_rendered_dot_ldd(two_var_depth_2_else_child_ldd())
+
+show_ldd_2d(one_var_depth_2_then_child_ldd(), x_range, y_range)
+save_rendered_dot_ldd(one_var_depth_2_then_child_ldd(), name="one_var_depth_2_then_child_ldd")
+show_ldd_2d(one_var_depth_2_then_child_ldd(), x_range, y_range)
+save_rendered_dot_ldd(one_var_depth_2_else_child_ldd(), name="one_var_depth_2_else_child_ldd")
+
 
 print("cons: " + string_constraint(cons) + 
       "\ncons_else: " + string_constraint(else_child(ldd_2_var_depth_1).cons) + 
