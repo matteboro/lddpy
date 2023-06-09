@@ -223,8 +223,6 @@ def split_recur(ldd, cons):
     if (var(ldd) > var(cons)):
         return split_insert_constraint(ldd, cons)
 
-    new_ldd = ldd_node(ldd.cons)
-
     if (var(then_child(ldd)) > var(cons)):
         new_pos_then, new_neg_then = split_insert_constraint(then_child(ldd), cons)
     else: # (var(then_child(node)) <= var(cons)) 
@@ -235,7 +233,17 @@ def split_recur(ldd, cons):
     else: # (var(else_child(node)) <= var(cons)) 
         new_pos_else, new_neg_else = split_recur(else_child(ldd), cons)
 
-    return (set_children(ldd, new_pos_then, new_pos_else), set_children(new_ldd, new_neg_then, new_neg_else))
+    if is_false(new_pos_then) and is_false(new_pos_else):
+        new_pos = false_node()
+    else:
+        new_pos = ldd_node(ldd.cons, new_pos_then, new_pos_else)
+
+    if is_false(new_neg_then) and is_false(new_neg_else):
+        new_neg = false_node()
+    else:
+        new_neg = ldd_node(ldd.cons, new_neg_then, new_neg_else)
+
+    return (new_pos, new_neg)
 
 def split(ldd, cons):
 
