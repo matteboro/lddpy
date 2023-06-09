@@ -1,5 +1,6 @@
 from ldd_split import *
 from ldd_visualization import *
+import graphviz
 
 def ASSERT_TYPES(objs, types, func_name):
     for i, (obj, _type) in enumerate(zip(objs, types)):
@@ -81,9 +82,15 @@ def check_split(x_range, y_range, ldd, cons):
 
 def test(x_range, y_range, ldd, cons):
     if not check_split(x_range, y_range, ldd, cons):
-        print(f"test number {TEST_NUMBER} failed")
+        print(f"test number {TEST_NUMBER} failed on constraint: {string_constraint(cons)}") 
     else:
         print(f"test number {TEST_NUMBER} passed")
+
+def show_split_2d(x_range, y_range, ldd, cons):
+    show_ldd_2d(ldd, x_range, y_range, f"ldd before constraint {string_constraint(cons)}")
+    pos_ldd, neg_ldd = split(ldd, cons)
+    show_ldd_2d(pos_ldd, x_range, y_range, f"positive ldd after constraint {string_constraint(cons)}")
+    show_ldd_2d(neg_ldd, x_range, y_range, f"negative ldd after constraint {string_constraint(cons)}")
 
 # this method create a new ldd with only one variable on two levels 
 def one_var_depth_2_ldd(var):
@@ -94,6 +101,20 @@ def one_var_depth_2_ldd(var):
                 ldd_node(constraint(f"v{var} >= 3"),
                     false_node(),
                     true_node()))
+
+def two_var_depth_1_ldd():
+    return ldd_node(constraint(f"v0 >= 6"), 
+                ldd_node(constraint(f"v1 >= 6"),
+                    true_node(),
+                    false_node()), 
+                ldd_node(constraint(f"v1 >= 6"),
+                    false_node(),
+                    true_node()))
+
+def save_dot_ldd(ldd, format="pdf", name=""):
+    dot_string = dump_ldd_dot(ldd, do_print=False)
+    dot = graphviz.Source(dot_string)
+    dot.render(f'dot_output/ldd{name}.gv', format=format).replace('\\', '/')
 
 X = 0
 Y = 1
@@ -127,4 +148,84 @@ ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
 cons = constraint(f"v0 <= 6")
 test(x_range, y_range, ldd_only_y_depth_2, cons)
 
-# test cases where 
+# test cases where the variable of the constraint is only on the root node
+
+# constraint in std form
+
+TEST_NUMBER = 4
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 10")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 5
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 7")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 6
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 6")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 7
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 5")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 8
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 2")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+# constraint not in std form
+
+TEST_NUMBER = 9
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 <= 10")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 10
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 <= 6")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 11
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 <= 5")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 12
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 4")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+TEST_NUMBER = 13
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+cons = constraint(f"v0 >= 2")
+test(x_range, y_range, ldd_2_var_depth_1, cons)
+
+"""
+print("cons: " + string_constraint(cons) + 
+      "\ncons_else: " + string_constraint(else_child(ldd_2_var_depth_1).cons) + 
+      "\ncons_if: " + string_constraint(ldd_2_var_depth_1.cons) + 
+      "\ncons_then: " + string_constraint(then_child(ldd_2_var_depth_1).cons))
+
+print(split_choose_side(cons, else_child(ldd_2_var_depth_1).cons, ldd_2_var_depth_1.cons, then_child(ldd_2_var_depth_1).cons))
+
+ldd_2_var_depth_1 = two_var_depth_1_ldd()
+# show_split_2d(x_range, y_range, ldd_2_var_depth_1, cons)
+save_dot_ldd(ldd_2_var_depth_1, name="before")
+pos_ldd, neg_ldd = split(ldd_2_var_depth_1, cons)
+save_dot_ldd(pos_ldd, name="pos")
+save_dot_ldd(neg_ldd, name="neg")
+"""

@@ -24,13 +24,15 @@ def dump_ldd_dot_recursive(node, count, string):
         string.append(f'node{my_idx} -> node{my_else_idx} [style="dashed"];')
         string.append(f'node{my_idx} -> node{my_then_idx};')
 
-def dump_ldd_dot(node):
+def dump_ldd_dot(node, do_print=True):
     string = ["digraph BDD {"]
     global counter
     counter += 1
     dump_ldd_dot_recursive(node, counter, string)
     string.append("}")
-    print('\n'.join(string))
+    if do_print:
+        print('\n'.join(string))
+    return '\n'.join(string)
 
 def dump_ldd(node):
     if (is_constant(node)):
@@ -44,10 +46,12 @@ def dump_ldd(node):
         dump_ldd(node._else)
         print(")", end="")
             
-def show_ldd_2d(ldd, from_w, to_w, from_h, to_h):
-
+def show_ldd_2d(ldd, x_range, y_range, title="ldd"):
+    from_w, to_w = x_range
+    from_h, to_h = y_range
     grid = satisfies_2d_grid(ldd, from_w, to_w, from_h, to_h)
     plt.imshow(grid, extent=[from_w, to_w, from_h, to_h], cmap=my_cmap)
+    plt.title(title)
     ax = plt.gca()
 
     # Major ticks
