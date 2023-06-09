@@ -36,13 +36,21 @@ def satisfy_constraint(cons, x):
 # the nodes of a ldd always contains constraints written in standard form
 
 def is_std_form(cons):
-    return cons.op == ">="
+    return cons.op == GEQ
 
 def complement_if_not_std_form(cons):
     if is_std_form(cons):
         return cons   
-    return constraint(cons.var, ">=", cons.cst+1)
+    return constraint(cons.var, GEQ, cons.cst+1)
 
+def complement(cons):
+    if cons.op == GEQ:
+        return constraint(cons.var, LEQ, cons.cst-1)
+    elif cons.op == LEQ:
+        return constraint(cons.var, GEQ, cons.cst+1)
+    else:
+        print("unreachable: method complement(cons)")
+        exit(1)
 
 def string_constraint(cons):
     return f"v{cons.var} {cons.op} {cons.cst}"

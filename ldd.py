@@ -1,4 +1,5 @@
 from constraint import *
+import numpy as np
 
 node_counter = 0
 
@@ -129,6 +130,19 @@ def satisfies_2d(ldd, x, y):
                 return satisfies_2d(else_child(ldd), x, y)
         else:
             return False
+
+def satisfies_2d_grid(ldd, from_x, to_x, from_y, to_y):
+
+    x_size = to_x - from_x
+    y_size = to_y - from_y
+
+    grid = np.zeros((y_size, x_size), dtype=int)
+
+    for i in range (from_x, to_x):
+        for j in range(from_y, to_y):
+            grid[y_size - 1 - (j - from_y), i - from_x] = True if satisfies_2d(ldd, i, j) else False
+    
+    return grid
 
 # this method returns the list of unique indexes of the nodes that compose an ldd 
 def list_of_indexes(ldd):
