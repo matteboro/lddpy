@@ -9,11 +9,17 @@ def ASSERT_TYPES(objs, types, func_name):
                   but of type {obj.__class__.__name__}")
             exit(1)
 
-def SPLIT_ERROR(x, y, before_val, pos_val, neg_val, case):
-    print(f"   SPLIT ERROR at coordinates ({x}, {y}), values: [ before: {before_val}, pos:{pos_val}, neg:{neg_val} ] in case: {case}")
+def SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, case):
+    print(f"   SPLIT GRID ERROR at coordinates ({x}, {y}), values: [ before: {before_val}, pos:{pos_val}, neg:{neg_val} ] in case: {case}")
     return False
 
-def check_split(from_x, to_x, from_y, to_y, before, pos, neg, cons):
+def SPLIT_SHARE_NODES_ERROR(pos_ldd, neg_ldd):
+    print(f"   SPLIT SHARE NODES ERROR")
+    dump_ldd_dot(pos_ldd)
+    dump_ldd_dot(neg_ldd)
+    return False
+
+def check_split_grid(from_x, to_x, from_y, to_y, before, pos, neg, cons):
     ASSERT_TYPES([before,     pos,        neg,        cons], 
                  [np.ndarray, np.ndarray, np.ndarray, constraint], 
                  "check_split(before, pos, neg, constraint)")
@@ -46,58 +52,79 @@ def check_split(from_x, to_x, from_y, to_y, before, pos, neg, cons):
             if cons.var == 0:
                 if x >= cons.cst:
                     if not (neg_val == False and pos_val == before_val):
-                        return SPLIT_ERROR(x, y, before_val, pos_val, neg_val, f"x >= cons.cst")
+                        return SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, f"x >= cons.cst")
                 else:
                     if not (pos_val == False and neg_val == before_val):
-                        return SPLIT_ERROR(x, y, before_val, pos_val, neg_val, f"x < cons.cst")
+                        return SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, f"x < cons.cst")
             elif cons.var == 1:
                 if y >= cons.cst:
                     if not (neg_val == False and pos_val == before_val):
-                        return SPLIT_ERROR(x, y, before_val, pos_val, neg_val, f"y >= cons.cst")
+                        return SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, f"y >= cons.cst")
                 else:
                     if not (pos_val == False and neg_val == before_val):
-                        return SPLIT_ERROR(x, y, before_val, pos_val, neg_val, f"y < cons.cst")
+                        return SPLIT_GRID_ERROR(x, y, before_val, pos_val, neg_val, f"y < cons.cst")
     return True
 
+def check_split(x_range, y_range, ldd, cons):
+    from_x, to_x = x_range
+    from_y, to_y = y_range
+    before = satisfies_2d_grid(ldd, from_x, to_x, from_y, to_y)
+    pos_ldd, neg_ldd = split(ldd, cons)
+    pos = satisfies_2d_grid(pos_ldd, from_x, to_x, from_y, to_y)
+    neg = satisfies_2d_grid(neg_ldd, from_x, to_x, from_y, to_y)
 
-from_x, to_x = (0, 12)
-from_y, to_y = (0, 12)
+    if not check_split_grid(from_x, to_x, from_y, to_y, before, pos, neg, cons):
+        return False
+    if not dont_share_ldd_nodes(pos_ldd, neg_ldd):
+        return SPLIT_SHARE_NODES_ERROR(pos_ldd, neg_ldd)
+    return True
 
-ldd_only_x_depth_2 = ldd_node(constraint("v0 >= 6"), 
-                        ldd_node(constraint("v0 >= 9"),
-                            false_node(),
-                            true_node()), 
-                        ldd_node(constraint("v0 >= 3"),
-                            false_node(),
-                            true_node()))
+def test(x_range, y_range, ldd, cons):
+    if not check_split(x_range, y_range, ldd, cons):
+        print(f"test number {TEST_NUMBER} failed")
+    else:
+        print(f"test number {TEST_NUMBER} passed")
 
-before = satisfies_2d_grid(ldd_only_x_depth_2, from_x, to_x, from_y, to_y)
+# this method create a new ldd with only one variable on two levels 
+def one_var_depth_2_ldd(var):
+    return ldd_node(constraint(f"v{var} >= 6"), 
+                ldd_node(constraint(f"v{var} >= 9"),
+                    false_node(),
+                    true_node()), 
+                ldd_node(constraint(f"v{var} >= 3"),
+                    false_node(),
+                    true_node()))
 
-show_ldd_2d(ldd_only_x_depth_2, 0, 12, 0, 12)
+X = 0
+Y = 1
 
-cons = constraint("v1 <= 6")
-pos_ldd, neg_ldd = split(ldd_only_x_depth_2, cons)
-pos = satisfies_2d_grid(pos_ldd, from_x, to_x, from_y, to_y)
-neg = satisfies_2d_grid(neg_ldd, from_x, to_x, from_y, to_y)
+x_range = (0, 12)
+y_range = (0, 12)
 
-if not check_split(from_x, to_x, from_y, to_y, before, pos, neg, cons):
-    print("test failed")
-else:
-    print("test passed")
+# test cases where the variable of the constraint is not present in the ldd
 
-show_ldd_2d(pos_ldd, 0, 12, 0, 12)
-show_ldd_2d(neg_ldd, 0, 12, 0, 12)
+TEST_NUMBER = 0
 
+ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
+cons = constraint(f"v1 <= 6")
+test(x_range, y_range, ldd_only_x_depth_2, cons)
 
-"""
-ldd_only_y_depth_2 = ldd_node(constraint("v1 >= 6"), 
-                        ldd_node(constraint("v1 >= 9"),
-                            false_node(),
-                            true_node()), 
-                        ldd_node(constraint("v1 >= 3"),
-                            false_node(),
-                            true_node()))
+TEST_NUMBER = 1
 
-"""
-# show_ldd_2d(ldd_only_x_depth_2, 0, 12, 0, 12)
-# show_ldd_2d(ldd_only_y_depth_2, 0, 12, 0, 12)
+ldd_only_x_depth_2 = one_var_depth_2_ldd(X)
+cons = constraint(f"v1 >= 6")
+test(x_range, y_range, ldd_only_x_depth_2, cons)
+
+TEST_NUMBER = 2
+
+ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
+cons = constraint(f"v0 >= 6")
+test(x_range, y_range, ldd_only_y_depth_2, cons)
+
+TEST_NUMBER = 3
+
+ldd_only_y_depth_2 = one_var_depth_2_ldd(Y)
+cons = constraint(f"v0 <= 6")
+test(x_range, y_range, ldd_only_y_depth_2, cons)
+
+# test cases where 

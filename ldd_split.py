@@ -58,7 +58,7 @@ def split_choose_side(cons, cons_else, cons_if, cons_then):
         if cons.cst < cons_if.cst:
             return ONLY_ELSE_LEFT
         elif cons.cst == cons_if.cst:
-            return IF_RIGHT
+            return IF_LEFT
         elif cons.cst > cons_if.cst:
             return ONLY_THEN_RIGHT
         else:
@@ -124,7 +124,7 @@ def split_place_constraint(ldd, cons):
         print("unreachable: split_place_constraint")
         exit(1)
 
-    print("TODO: unimplemented split_place_constraint")
+    print("unreachable: split_place_constraint")
     exit(1)
 
 def split_insert_constraint(ldd, cons):
