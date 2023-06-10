@@ -1244,6 +1244,834 @@ def test17():
     cons = constraint("v0 <= 11")
     test(x_range, y_range, ldd, cons, TEST_NUMBER)
 
+def test18():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 198
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 199
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 200
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 201
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 202
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 203
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 204
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 205
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 206
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 207
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 208
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test19():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 209
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 210
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 211
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 212
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 213
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 214
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 215
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 216
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 217
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 218
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 219
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v0 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test20():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 220
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 221
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 222
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 223
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 224
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 225
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 226
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 227
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 228
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 229
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 230
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test21():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 231
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 232
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 233
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 234
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 235
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 236
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 237
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 238
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 239
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 240
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 241
+
+    ldd = one_var_depth_2_then_child_ldd()
+    cons = constraint("v1 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test22():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 242
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 243
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 244
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 245
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 246
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 247
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 248
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 249
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 250
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 251
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 252
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test23():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 253
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 254
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 255
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 256
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 257
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 258
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 259
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 260
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 261
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 262
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 263
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v0 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test24():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 264
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 265
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 266
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 267
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 268
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 269
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 270
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 271
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 272
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 273
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 274
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test25():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 275
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 276
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 277
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 278
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 279
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 280
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 281
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 282
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 283
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 284
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 285
+
+    ldd = one_var_depth_2_else_child_ldd()
+    cons = constraint("v1 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test26():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 286
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 287
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 288
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 289
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 290
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 291
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 292
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 293
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 294
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 295
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 296
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test27():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 297
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 298
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 299
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 300
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 301
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 302
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 303
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 304
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 305
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 306
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 307
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v0 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test28():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 308
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 309
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 310
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 311
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 312
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 313
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 314
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 315
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 316
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 317
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 318
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 >= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+def test29():
+    global TEST_NUMBER
+
+    TEST_NUMBER = 319
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 1")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 320
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 2")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 321
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 3")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 322
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 4")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 323
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 5")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 324
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 6")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 325
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 7")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 326
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 8")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 327
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 9")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 328
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 10")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
+    TEST_NUMBER = 329
+
+    ldd = two_var_depth_2_ldd()
+    cons = constraint("v1 <= 11")
+    test(x_range, y_range, ldd, cons, TEST_NUMBER)
+
 test0()
 test1()
 test2()
@@ -1262,3 +2090,15 @@ test14()
 test15()
 test16()
 test17()
+test18()
+test19()
+test20()
+test21()
+test22()
+test23()
+test24()
+test25()
+test26()
+test27()
+test28()
+test29()
