@@ -104,7 +104,8 @@ def split_place_constraint(ldd, cons):
         return (new_ldd_pos, new_ldd_neg)
         
     elif side == IF_RIGHT:
-        print_debug("caso IF_RIGHT")
+        print("unreachable: caso IF_RIGHT")
+        exit(1)
 
     elif side == IF_LEFT:
         print_debug("caso IF_LEFT")

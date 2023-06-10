@@ -33,7 +33,7 @@ def check_split_grid(from_x, to_x, from_y, to_y, before, pos, neg, cons):
                  "check_split(before, pos, neg, constraint)")
     
     if cons.var > 1 or cons.var < 0:
-        print("ERROR in check_split: constraint is not fo variable 0 or 1")
+        print("ERROR in check_split: constraint is not of variable 0 or 1")
         exit(1)
 
     if not is_std_form(cons):
@@ -104,21 +104,44 @@ def show_split_2d(x_range, y_range, ldd, cons):
     show_ldd_2d(pos_ldd, x_range, y_range, f"positive ldd after constraint {string_constraint(cons)}")
     show_ldd_2d(neg_ldd, x_range, y_range, f"negative ldd after constraint {string_constraint(cons)}")
 
-def test_code_generator(name, test_number, ldd_generator_function, var, op, param="", starting_code=""):
+def test_code_generator(name, test_number, ldd_generator_function, var, op, param="", starting_code="", rng = (1, 12)):
     spaces = "    "
     string = starting_code
     string = string + f"def test{name}():\n{spaces}global TEST_NUMBER\n\n"
 
-    for i in range(1, 12):
+    for i in range(rng[0], rng[1]):
         string = string + f"{spaces}TEST_NUMBER = {test_number}\n\n"
         string = string + f"{spaces}ldd = {ldd_generator_function}({param})\n"
         string = string + f'{spaces}cons = constraint("v{var} {op} {i}")\n'
         string = string + f"{spaces}test(x_range, y_range, ldd, cons, TEST_NUMBER)\n\n"
         test_number += 1
 
+    string = string + f"test{name}()\n\n"
     return string, test_number
 
-# this method create a new ldd with only one variable on two levels 
+def from_list_to_ldd_like_list(l):
+    if len(l) % 2 == 0:
+        print("ERROR list passed to from_list_to_ldd(l) cannot have a even number of element")
+        exit(1)
+    if len(l) == 1:
+        return [l[0], True, False]
+    return [l[int(len(l)/2)], from_list_to_ldd_like_list(l[:int(len(l)/2)]), from_list_to_ldd_like_list(l[int(len(l)/2)+1:])]
+
+def from_ldd_like_list_to_ldd(l):
+    if l is True:
+        return true_node()
+    elif l is False:
+        return false_node()
+    cons = constraint(f"v0 >= {l[0]}")
+    ldd_else = from_ldd_like_list_to_ldd(l[1])
+    ldd_then = from_ldd_like_list_to_ldd(l[2])
+    return ldd_node(cons, ldd_then, ldd_else)
+
+def complete_binary_tree_number_of_nodes(levels):
+    if levels == 1:
+        return 1
+    return complete_binary_tree_number_of_nodes(levels-1) + (2**(levels-1))
+
 def one_var_depth_2_ldd(var=X):
     return ldd_node(constraint(f"v{var} >= 6"), 
                 ldd_node(constraint(f"v{var} >= 9"),
@@ -212,12 +235,18 @@ def two_var_depth_2_ldd():
                     else_then_child,
                     else_else_child))
 
+def one_var_arbitrary_depth_complete_ldd(levels):
+    l = [3*(i+1) for i in range(complete_binary_tree_number_of_nodes(levels))]
+    l = from_list_to_ldd_like_list(l)
+    return from_ldd_like_list_to_ldd(l)
+
 x_range = (0, 12)
 y_range = (0, 12)
 
 if __name__ == "__main__":
     test_number = 0
-    test_code, test_number = test_code_generator(0, test_number, "one_var_depth_2_ldd", Y, GEQ, param="X")
+    test_code = "from ldd_test import *\n\n" + "TEST_NUMBER = 0\n\n" + "x_range = (0, 12)\n" + "y_range = (0, 12)\n\n"
+    test_code, test_number = test_code_generator(0, test_number, "one_var_depth_2_ldd", Y, GEQ, param="X", starting_code=test_code)
     test_code, test_number = test_code_generator(1, test_number, "one_var_depth_2_ldd", Y, LEQ, param="X", starting_code=test_code)
     test_code, test_number = test_code_generator(2, test_number, "one_var_depth_2_ldd", X, GEQ, param="Y", starting_code=test_code)
     test_code, test_number = test_code_generator(3, test_number, "one_var_depth_2_ldd", X, LEQ, param="Y", starting_code=test_code)
@@ -255,12 +284,12 @@ if __name__ == "__main__":
     test_code, test_number = test_code_generator(28, test_number, "two_var_depth_2_ldd", Y, GEQ, starting_code=test_code)
     test_code, test_number = test_code_generator(29, test_number, "two_var_depth_2_ldd", Y, LEQ, starting_code=test_code)
 
+    test_code = test_code + "x_range = (0, 24)\n" + "y_range = (0, 6)\n\n"
+    test_code, test_number = test_code_generator(30, test_number, "one_var_arbitrary_depth_complete_ldd", X, GEQ, param=3, starting_code=test_code, rng=(1, 24))
+    test_code, test_number = test_code_generator(31, test_number, "one_var_arbitrary_depth_complete_ldd", X, LEQ, param=3, starting_code=test_code, rng=(1, 24))
+
     with open("tests.py", "w") as text_file:
-        text_file.write("from ldd_test import *\n\n")
-        text_file.write("TEST_NUMBER = 0\n\n")
         text_file.write(test_code)
-        for i in range(0, 30):
-            text_file.write(f"test{i}()\n")
 
     save_rendered_dot_ldd(one_var_depth_2_ldd(X), name="_one_var_depth_2_ldd")
     save_rendered_dot_ldd(two_var_depth_1_ldd(), name="_two_var_depth_1_ldd")
@@ -269,3 +298,8 @@ if __name__ == "__main__":
     save_rendered_dot_ldd(one_var_depth_2_then_child_ldd(), name="_one_var_depth_2_then_child_ldd")
     save_rendered_dot_ldd(one_var_depth_2_else_child_ldd(), name="_one_var_depth_2_else_child_ldd")
     save_rendered_dot_ldd(two_var_depth_2_ldd(), name="_two_var_depth_2_ldd")
+    save_rendered_dot_ldd(one_var_arbitrary_depth_complete_ldd(3), name="one_var_arbitrary_depth_complete_ldd(3)")
+    save_rendered_dot_ldd(one_var_arbitrary_depth_complete_ldd(4), name="one_var_arbitrary_depth_complete_ldd(4)")
+    save_rendered_dot_ldd(one_var_arbitrary_depth_complete_ldd(5), name="one_var_arbitrary_depth_complete_ldd(5)")
+
+
